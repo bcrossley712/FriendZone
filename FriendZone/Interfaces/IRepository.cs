@@ -7,7 +7,7 @@ namespace FriendZone.Interfaces
     List<T> GetAll();
     T GetById(Tid id);
     T Create(T data);
-    void Edit(T data);
+    void Update(T data);
     void Delete(Tid id);
   }
 }

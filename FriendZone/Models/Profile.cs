@@ -13,4 +13,8 @@ namespace FriendZone.Models
 
 
   }
+  public class ProfilesFollowsViewModel
+  {
+    public string FollowId { get; set; }
+  }
 }
