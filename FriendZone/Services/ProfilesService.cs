@@ -26,12 +26,12 @@ namespace FriendZone.Services
 
     internal List<ProfilesFollowsViewModel> GetProfileFollowers(string id)
     {
-      throw new NotImplementedException();
+      return _profilesRepository.GetProfileFollowers(id);
     }
 
     internal List<ProfilesFollowsViewModel> GetProfileFollowing(string id)
     {
-      throw new NotImplementedException();
+      return _profilesRepository.GetProfileFollowing(id);
     }
   }
 

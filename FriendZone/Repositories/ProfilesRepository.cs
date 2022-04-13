@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Data;
-using FriendZone.Interfaces;
+using System.Linq;
+using Dapper;
 using FriendZone.Models;
 
 namespace FriendZone.Repositories
 {
-  public class ProfilesRepository : IRepository<Profile, int>
+  public class ProfilesRepository
   {
     private readonly IDbConnection _db;
 
@@ -23,18 +24,30 @@ namespace FriendZone.Repositories
     {
       throw new System.NotImplementedException();
     }
-    public Profile Create(Profile data)
+    internal List<ProfilesFollowsViewModel> GetProfileFollowers(string id)
     {
-      throw new System.NotImplementedException();
-    }
-    public void Update(Profile data)
-    {
-      throw new System.NotImplementedException();
+      string sql = @"
+      SELECT
+        a.*,
+        f.id AS FollowId
+      FROM follows f
+      JOIN accounts a ON a.id = f.follower
+      WHERE f.following = @id;
+      ";
+      return _db.Query<ProfilesFollowsViewModel>(sql, new { id }).ToList();
     }
 
-    public void Delete(int id)
+    internal List<ProfilesFollowsViewModel> GetProfileFollowing(string id)
     {
-      throw new System.NotImplementedException();
+      string sql = @"
+      SELECT
+        a.*,
+        f.id AS FollowId
+      FROM follows f
+      JOIN accounts a ON a.id = f.following
+      WHERE f.follower = @id;
+      ";
+      return _db.Query<ProfilesFollowsViewModel>(sql, new { id }).ToList();
     }
 
   }

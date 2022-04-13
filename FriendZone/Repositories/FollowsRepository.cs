@@ -38,7 +38,7 @@ namespace FriendZone.Repositories
 
     public void Delete(int id)
     {
-      string sql = "REMOVE FROM follows WHERE id = @id LIMIT 1;";
+      string sql = "DELETE FROM follows WHERE id = @id LIMIT 1;";
       _db.Execute(sql, new { id });
     }
   }
