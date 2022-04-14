@@ -16,7 +16,18 @@ namespace FriendZone.Services
 
     public List<Profile> GetAll()
     {
-      throw new NotImplementedException();
+      List<Profile> profiles = _profilesRepository.GetAll();
+      profiles.ForEach(p =>
+      {
+        List<ProfilesFollowsViewModel> followers = GetProfileFollowers(p.Id);
+        p.Followers = followers;
+      });
+      profiles.ForEach(p =>
+      {
+        List<ProfilesFollowsViewModel> following = GetProfileFollowing(p.Id);
+        p.Following = following;
+      });
+      return profiles;
     }
 
     public Profile GetById(int id)
@@ -26,7 +37,9 @@ namespace FriendZone.Services
 
     internal List<ProfilesFollowsViewModel> GetProfileFollowers(string id)
     {
-      return _profilesRepository.GetProfileFollowers(id);
+      List<ProfilesFollowsViewModel> followers = _profilesRepository.GetProfileFollowers(id);
+
+      return followers;
     }
 
     internal List<ProfilesFollowsViewModel> GetProfileFollowing(string id)

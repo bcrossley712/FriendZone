@@ -29,11 +29,12 @@ namespace FriendZone.Services
       return profile;
     }
 
-    internal Account Edit(Account editData, string userEmail)
+    internal Account Edit(Account editData, Account data)
     {
-      Account original = GetProfileByEmail(userEmail);
+      Account original = GetProfileByEmail(data.Email);
       original.Name = editData.Name.Length > 0 ? editData.Name : original.Name;
       original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
+      original.Likes = editData.Likes.Length > 0 ? editData.Likes : original.Likes;
       return _repo.Edit(original);
     }
 

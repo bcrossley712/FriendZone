@@ -33,6 +33,22 @@ namespace FriendZone.Controllers
         return BadRequest(e.Message);
       }
     }
+    [HttpPut]
+    [Authorize]
+    public async Task<ActionResult<Account>> Update([FromBody] Account updateData, string id)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        updateData.Id = id;
+        Account update = _accountService.Edit(updateData, userInfo);
+        return Created($"api/account/{update.Id}", update);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 
 

@@ -17,7 +17,8 @@ namespace FriendZone.Repositories
 
     public List<Profile> GetAll()
     {
-      throw new System.NotImplementedException();
+      string sql = "SELECT * FROM accounts;";
+      return _db.Query<Profile>(sql).ToList();
     }
 
     public Profile GetById(int id)

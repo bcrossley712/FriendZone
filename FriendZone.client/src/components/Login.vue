@@ -1,7 +1,7 @@
 <template>
   <span class="navbar-text">
     <button
-      class="btn selectable text-success lighten-30 text-uppercase my-2 my-lg-0"
+      class="btn selectable text-dark text-uppercase my-2 my-lg-0"
       @click="login"
       v-if="!user.isAuthenticated"
     >
@@ -15,25 +15,33 @@
         aria-expanded="false"
         id="authDropdown"
       >
-        <div v-if="account.picture">
+        <div v-if="account.picture" class="d-flex align-items-center">
+          <div class="text-dark d-flex flex-column">
+            <span class="fw-bold">{{ account.name }}</span>
+            <span class="">
+              <i class="mdi mdi-account-multiple text-danger"></i>
+              {{ followers?.length }}
+            </span>
+          </div>
           <img
             :src="account.picture"
             alt="account photo"
-            height="40"
-            class="rounded"
+            height="50"
+            class="rounded ms-3"
           />
-          <span class="mx-3 text-success lighten-30">{{ account.name }}</span>
         </div>
       </div>
       <div
         class="dropdown-menu p-0 list-group w-100"
         aria-labelledby="authDropdown"
       >
-        <router-link :to="{ name: 'Account' }">
-          <div class="list-group-item list-group-item-action hoverable">
-            Manage Account
-          </div>
-        </router-link>
+        <div
+          class="list-group-item list-group-item-action hoverable"
+          data-bs-toggle="modal"
+          data-bs-target="#edit-account"
+        >
+          Manage Account
+        </div>
         <div
           class="list-group-item list-group-item-action hoverable text-danger"
           @click="logout"
@@ -56,6 +64,7 @@ export default {
     return {
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
+      followers: computed(() => AppState.myProfile.followers),
       async login() {
         AuthService.loginWithPopup();
       },
